@@ -6,7 +6,7 @@ target/
 etc/
 
 # Package Files #
-*.jar
+# *.jar
 *.war
 *.ear
 

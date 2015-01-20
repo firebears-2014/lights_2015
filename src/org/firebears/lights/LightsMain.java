@@ -1,4 +1,4 @@
-package org.firebears.main;
+package org.firebears.lights;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;

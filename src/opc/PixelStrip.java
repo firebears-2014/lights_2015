@@ -104,6 +104,16 @@ public class PixelStrip {
 			this.animation.reset(this);
 		}
 	}
+	
+	/**
+	 * Push a number value to the currently running animation.  This only 
+	 * applies if the Animation has been defined as reactive to the environment.
+	 */
+	public void setValue(double n) {
+		if (this.animation != null) {
+			this.animation.setValue(n);
+		}
+	}
 
 	/**
 	 * Set a pixel color within the global pixel map of this strip.

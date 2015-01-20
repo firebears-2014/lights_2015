@@ -19,6 +19,14 @@ public abstract class Animation {
 	 * @return whether a redraw is needed.
 	 */
 	public abstract boolean draw(PixelStrip strip);
+	
+	/**
+	 * Set a number value into the Animation. You can override this method to
+	 * make your Animation reactive to the environment.
+	 */
+	public void setValue(double n) {
+		// Override this in your Animation class
+	}
 
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

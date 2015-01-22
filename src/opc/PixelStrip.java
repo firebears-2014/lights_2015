@@ -106,6 +106,13 @@ public class PixelStrip {
 	}
 	
 	/**
+	 * @return the current running Animation.  May be null.
+	 */
+	public Animation getAnimation() {
+		return this.animation;
+	}
+	
+	/**
 	 * Push a number value to the currently running animation.  This only 
 	 * applies if the Animation has been defined as reactive to the environment.
 	 */

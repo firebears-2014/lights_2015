@@ -14,12 +14,16 @@ public class Fire extends Animation {
 	public static final String FC_SERVER_HOST = "raspberrypi.local";
 	
 	int timepass = 0;
+	long prevtime = 0;
 
 	int currentPixel;
 	long timePerPixel = 200L;
 	//Red, Yellow, Orange, Purple, White, 
 	int colors[] = new int[] {
-			0xFF0000, 0xFFAA00, 0xFF5500, 0xFF1100, 0xFF1111, 0xFFAAAA, 0x000000
+			0xFF0000, 0xFF7700, 0xFF5500, 0xFF1100, 0x220000, 0xFF9900,
+			0x000000, 
+			//8,9,10 sparks
+			0xAAAA00, 0xFFFFFF, 0x0000FF
 	};
 	
 	//every 4
@@ -58,31 +62,48 @@ public class Fire extends Animation {
 
 	@Override
 	public boolean draw(PixelStrip strip) {
-//		long currentTime = millis() % timeCycle;
-		int a;
-		for (int p = 0; p < (strip.getPixelCount() / 4); p++) {
-			a = (p*4) + timepass;
-			strip.setPixelColor(limit_a(a, strip.getPixelCount()),
-				mixColor(colors[temp_colors[p%4]], colors[temp_colors[(p%4)+1]], 1.f)
-			);
-			strip.setPixelColor(limit_a(a+1, strip.getPixelCount()), 
-					mixColor(colors[temp_colors[p%4]], colors[temp_colors[(p%4)+1]], .75f)
+		int a, ct1, ct2;
+
+		if(prevtime + 100 < millis()) {
+			prevtime = millis();
+			for (int p = 0; p < (strip.getPixelCount() / 4); p++) {
+				a = (p*4) + timepass;
+				ct1 = temp_colors[p%4];
+				ct2 = temp_colors[(p%4)+1];
+				if(ct1 > 3) {
+					ct1-=3;
+				}
+				
+				strip.setPixelColor(limit_a(a, strip.getPixelCount()),
+					mixColor(colors[ct1], colors[ct2], 1.f)
 				);
-			strip.setPixelColor(limit_a(a+2, strip.getPixelCount()), 
-					mixColor(colors[temp_colors[p%4]], colors[temp_colors[(p%4)+1]], .5f)
+				strip.setPixelColor(limit_a(a+1, strip.getPixelCount()), 
+						mixColor(colors[ct1], colors[ct2], .75f)
+					);
+				if((int)(Math.random()*10) == 0) {
+					strip.setPixelColor(limit_a(a+2, strip.getPixelCount()),
+						colors[(((int)Math.random())*3) + 8]
+					);
+				}else{
+					strip.setPixelColor(limit_a(a+2, strip.getPixelCount()), 
+						mixColor(colors[ct1], colors[ct2], .5f)
+					);
+				}
+				strip.setPixelColor(limit_a(a+3, strip.getPixelCount()), 
+					mixColor(colors[ct1], colors[ct2], .25f)
 				);
-			strip.setPixelColor(limit_a(a+3, strip.getPixelCount()), 
-				mixColor(colors[temp_colors[p%4]], colors[temp_colors[(p%4)+1]], .25f)
-			);
+			}
+			timepass++;
+			if(timepass > strip.getPixelCount()) {
+				timepass = 0;
+			}
+			if((int)(Math.random()*2) == 1) {
+				temp_colors[(int)(Math.random() * 5)] = (int)(Math.random()*7); 
+			}
+			return true;	
+		}else{
+			return false;
 		}
-		timepass++;
-		if(timepass > strip.getPixelCount()) {
-			timepass = 0;
-		}
-		if((int)(Math.random()*2) == 1) {
-			temp_colors[(int)(Math.random() * 5)] = (int)(Math.random()*7); 
-		}
-		return true;
 	}
 	
 	public static void main(String[] args) throws Exception {

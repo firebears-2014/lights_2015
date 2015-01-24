@@ -140,7 +140,7 @@ public class PixelStrip {
 
 	@Override
 	public String toString() {
-		String d = (description == null) ? "" : "\"" + description + "\"";
+		String d = (description == null) ? "" : ",\"" + description + "\"";
 		return "PixelStrip(" + this.pixelCount + d + ")";
 	}
 }

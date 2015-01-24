@@ -10,8 +10,13 @@ import opc.PixelStrip;
  */
 public class MovingPixel extends Animation {
 	
-	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "raspberrypi.local";
+	/** Host name or IP address of the Fadecandy server. */
+	public static final String FC_SERVER_HOST 
+		= System.getProperty("fadecandy.server", "raspberrypi.local");
+	
+	/** Port number of the Fadecandy server. */
+	public static final int FC_SERVER_PORT 
+		= Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
 
 	int currentPixel;
 	long timePerPixel = 200L;

@@ -15,7 +15,7 @@ public class Pulsing extends Animation {
 
 	/** Milliseconds for each pulse cycle. */
 	long timeCycle = 2000;
-	int color[] = { 
+	public int color[] = { 
 			makeColor(0, 128, 0), // Green
 			makeColor(64, 64, 0), // Yellow
 //			makeColor(64, 64, 64), // White

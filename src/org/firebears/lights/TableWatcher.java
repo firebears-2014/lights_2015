@@ -29,6 +29,7 @@ public class TableWatcher implements ITableListener {
 	private final String prefix;
 	private final PixelStrip strip;
 	private final Map<String,Animation> animationMap;
+	private final boolean clear = true;
 
 	public TableWatcher(String prefix, PixelStrip strip) {
 		this.prefix = prefix;
@@ -43,19 +44,19 @@ public class TableWatcher implements ITableListener {
 	@Override
 	public void valueChanged(ITable source, String key, Object value, boolean isNew) {
 		if (! key.startsWith(prefix)) { return; } 
-		String relativeKey = key.substring(prefix.length());
-		if (contains(relativeKey, NetworkTable.PATH_SEPARATOR)) { return; }
-		if (relativeKey.equals(".value"))  {
-			changeAnimationValue((Double)value);
+		String suffix = key.substring(prefix.length());
+		if (contains(suffix, NetworkTable.PATH_SEPARATOR)) { return; }
+		if (suffix.equals(".value"))  {
+			setValue((Double)value);
 		} else {
-			changeAnimation((String)value);
+			setAnimation((String)value);
 		}
 	}
 
 	/**
 	 * Change the number value of the current animation.
 	 */
-	private void changeAnimationValue(Double value) {
+	private void setValue(Double value) {
 		if (strip.getAnimation() == null) {
 			if (VERBOSE) {
 				System.err.println("Error: no animation running on " + strip);
@@ -73,7 +74,7 @@ public class TableWatcher implements ITableListener {
 	 * Change the animation currently running on this strip.
 	 * If the animationName is blank, turn off animation on this strip.
 	 */
-	private void changeAnimation(String animationName) {
+	private void setAnimation(String animationName) {
 		if (animationName==null || animationName.trim().length()==0) {
 			strip.setAnimation(null);
 			if (VERBOSE) {
@@ -92,8 +93,9 @@ public class TableWatcher implements ITableListener {
 		} else {
 			if (VERBOSE) {
 				System.out.println("changeAnimation on " + strip + " to "
-						+ animationName);
+						+ animationName + " : " + newAnimation);
 			}
+			if (clear) { strip.clear();  }
 			strip.setAnimation(newAnimation);
 		}
 	}

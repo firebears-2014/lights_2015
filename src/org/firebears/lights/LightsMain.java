@@ -60,13 +60,20 @@ public class LightsMain {
 		// Initialize pixel strip 1
 		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64, STRIP1); 
 		TableWatcher watcher1 = new TableWatcher(STRIP1, strip1);
-		table.addTableListener(watcher1, true);
 		watcher1.addAnimation(PULSING_GREEN_ANIM, new Pulsing());
 		watcher1.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
+		table.addTableListener(watcher1, true);
 
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());
-		
+		while (true) {
+			server.animate();
+			try {
+				Thread.sleep(25);
+			} catch (InterruptedException e ) {
+				if (VERBOSE) { System.err.println(e.getMessage()); }
+			}
+		}
 	}
 
 }

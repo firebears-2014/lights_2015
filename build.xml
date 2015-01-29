@@ -6,8 +6,8 @@
 	<property name="build.test.dir" location="${basedir}/target/classes_tests" />
 	<property name="report.test.dir" location="${basedir}/target/reports_tests" />
 	<property name="dist.dir" location="${basedir}/target" description="Directory for final distribution file" />
-	<property name="wpilib.dir" location="${user.home}/wpilib" />
-    <property name="networktables.jar" location="${wpilib.dir}/java/current/lib/NetworkTables.jar" /> 
+	<property name="install.dir" location="${user.home}" />
+	<property name="networktables.jar" location="${basedir}/lib/NetworkTables.jar" />
 	<property name="junit.jar" location="${basedir}/lib/junit.jar" />
 	<property name="hamcrest.jar" location="${basedir}/lib/hamcrest.jar" />
 
@@ -61,5 +61,11 @@
 	<target name="clean" description="clean up">
 		<delete dir="${build.dir}" />
 		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="install" depends="dist" description="Builds and installs the distribution">
+		<mkdir dir="${install.dir}" />
+		<copy file="${dist.dir}/${ant.project.name}.jar" todir="${install.dir}" />
+		<copy file="${networktables.jar}" todir="${install.dir}" />
 	</target>
 </project>

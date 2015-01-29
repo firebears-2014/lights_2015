@@ -19,7 +19,7 @@
 	</target>
 
 	<target name="compile" depends="init" description="compile the source ">
-		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="true">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="true" source="1.7">
 			<classpath>
 				<pathelement location="${build.dir}" />
 				<pathelement location="${networktables.jar}" />
@@ -28,7 +28,7 @@
 	</target>
 
 	<target name="test" depends="compile" description="execute all unit tests">
-		<javac srcdir="${test.dir}" destdir="${build.test.dir}" includeantruntime="true">
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" includeantruntime="true" source="1.7">
 			<classpath>
 				<pathelement location="${build.dir}" />
 				<pathelement location="${junit.jar}" />
@@ -53,7 +53,7 @@
 		<mkdir dir="${dist.dir}" />
 		<jar jarfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
 			<manifest>
-				<attribute name="Main-Class" value="org.firebears.main.LightsMain" />
+				<attribute name="Main-Class" value="org.firebears.lights.LightsMain" />
 			</manifest>
 		</jar>
 	</target>

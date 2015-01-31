@@ -4,6 +4,8 @@ import opc.OpcClient;
 import opc.OpcDevice;
 import opc.PixelStrip;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import examples.Fire;
+import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
 
@@ -25,6 +27,7 @@ public class LightsMain {
 	public static final String PULSING_GREEN_ANIM = "PULSING_GREEN_ANIM";
 	public static final String MOVING_BLUE_ANIM = "MOVING_BLUE_ANIM";
 	public static final String FIRE_ANIM = "FIRE_ANIM";
+	public static final String LIFT = "LIFT";
 
 	
 	/** Host name or IP address of the Network Table server. */
@@ -62,6 +65,9 @@ public class LightsMain {
 		TableWatcher watcher1 = new TableWatcher(STRIP1, strip1);
 		watcher1.addAnimation(PULSING_GREEN_ANIM, new Pulsing());
 		watcher1.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
+		watcher1.addAnimation(LIFT, new LiftLights());
+		watcher1.addAnimation(FIRE_ANIM, new Fire());
+
 		table.addTableListener(watcher1, true);
 
 		// Wait forever while Client Connection Reader thread runs

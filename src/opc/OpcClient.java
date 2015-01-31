@@ -339,11 +339,12 @@ public class OpcClient implements AutoCloseable {
 	// Pixel strip test
 	
 	public static void main(String[] arg) throws Exception {
-		String host = (arg.length>0 ? arg[0] : "localhost");
-		int port = (arg.length>1 ? Integer.parseInt(arg[1]) : 7890);
+		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
+		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
+		
 		int numPixels = (arg.length>2 ? Integer.parseInt(arg[2]) : 64);
 		
-		OpcClient server = new OpcClient(host, port);
+		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		PixelStrip strip = fadeCandy.addPixelStrip(0, numPixels);
 		System.out.println(server.getConfig());

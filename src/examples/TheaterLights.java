@@ -11,12 +11,12 @@ import opc.PixelStrip;
 public class TheaterLights extends Animation {
 	
 	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "localhost";
+	public static final String FC_SERVER_HOST = "raspberrypi.local";
 
 	int N = 2;
 	int state;
-	long timePerCycle = 100L;
 	int color;
+	long timePerCycle = 300L;
 	
 	/** Time for the next state change. */
 	long changeTime;
@@ -30,10 +30,17 @@ public class TheaterLights extends Animation {
 		state = 0;
 		changeTime = millis();
 	}
+	public void setValue(double n) {
+		// Override this in your Animation class
+		
+
+	}
+
+	
 
 	@Override
 	public boolean draw(PixelStrip strip) {
-		if (millis() < changeTime) { return false; }
+		if (millis() < changeTime) { return false;}
 			
 		state = (state + 1) % (N * 2);
 		for (int i=0; i<strip.getPixelCount(); i++)  {
@@ -48,7 +55,6 @@ public class TheaterLights extends Animation {
 	
 	
 	
-	
 	public static void main(String[] args) throws Exception {
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
@@ -59,7 +65,7 @@ public class TheaterLights extends Animation {
 		
 		for (int i=0; i<1000; i++) {
 			server.animate();
-			Thread.sleep(10);
+			Thread.sleep(100);
 		}
 		
 		strip1.clear();

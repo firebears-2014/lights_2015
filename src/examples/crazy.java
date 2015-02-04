@@ -13,6 +13,9 @@ public class crazy extends Animation{
 	= Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
 	long timeCycle = 2000000;
 
+	int rotat = 100;
+	int bright = 100;
+	int party = 0;
 	public int color[] = {
 			//row 0
 			makeColor(255,100 ,0),
@@ -80,24 +83,21 @@ public class crazy extends Animation{
 			makeColor(0,255 ,255),
 			makeColor(0,255 ,255),
 			makeColor(0,255 ,255),
-
-
 	};
 	int colorLen = color.length;
 	int row = 1;
 
 	public void setValue(double n){
-		row = (int)n;
+		rotat = (int)n;
 	}
 	
 	public void reset(PixelStrip strip) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public boolean draw(PixelStrip strip) {
 		long currentTime = millis() % timeCycle;
-		for(int i = 0; i < strip.getPixelCount(); i ++){
+		for(int i = party; i < strip.getPixelCount(); i ++){
 			int color_num = i % colorLen;
 			int timeShift = (int)((color_num + 1) * (colorLen + timeCycle));
 			int brightness = pulseOverTime((currentTime * timeShift) % timeCycle);
@@ -108,18 +108,18 @@ public class crazy extends Animation{
 		return true;
 	}
 		private int pulseOverTime(long timeNow) {
-			  double theta = 16 * timeNow / timeCycle;   // Angle in radians
+			  double theta = rotat * timeNow / timeCycle;   // Angle in radians
 			  double s = (Math.sin(theta) + 1.0) / 2.0;     // Value from 0.0 to 1.0
-			  return (int)Math.round(s * 256);
+			  return (int)Math.round(s * bright);
 			}
 	
 	public static void main(String[] args) throws Exception {
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		
-		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64);
-		PixelStrip strip2 = fadeCandy.addPixelStrip(1, 8);
-		PixelStrip strip3 = fadeCandy.addPixelStrip(2, 16);
+		PixelStrip strip1 = fadeCandy.addPixelStrip(0,512);
+		//PixelStrip strip2 = fadeCandy.addPixelStrip(1, 8);
+		//PixelStrip strip3 = fadeCandy.addPixelStrip(2, 16);
 		
 		Animation a = new crazy();
 		strip1.setAnimation(a);

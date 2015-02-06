@@ -1,6 +1,7 @@
 package examples;
 
 import opc.Animation;
+import opc.Foreground;
 import opc.OpcClient;
 import opc.OpcDevice;
 import opc.PixelStrip;
@@ -8,7 +9,7 @@ import opc.PixelStrip;
 /**
  * Example animation that makes a pixel move across the strip.
  */
-public class MovingPixel extends Animation {
+public class MovingPixel extends Foreground {
 	
 	/** Host name or IP address of the Fadecandy server. */
 	public static final String FC_SERVER_HOST 
@@ -31,6 +32,7 @@ public class MovingPixel extends Animation {
 
 	@Override
 	public void reset(PixelStrip strip) {
+		prepare(strip);
 		currentPixel = 0;
 		changeTime = millis();
 	}
@@ -39,13 +41,14 @@ public class MovingPixel extends Animation {
 	public boolean draw(PixelStrip strip) {
 		if (millis() < changeTime) { return false; }
 		
-		strip.setPixelColor(currentPixel, BLACK);
+//		setPix(strip, currentPixel, BLACK);
+		draw_bg();
 		
 		currentPixel = currentPixel + 1;
 		if (currentPixel >= strip.getPixelCount()) {
 			currentPixel = 0;
 		}
-		strip.setPixelColor(currentPixel, color);
+		setPix(strip, currentPixel, color);
 		
 		changeTime = millis() + timePerPixel;
 		return true;

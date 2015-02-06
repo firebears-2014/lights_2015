@@ -9,16 +9,22 @@ public class LiftLights extends Animation{
 	public static final String FC_SERVER_HOST = "raspberrypi.local";
 
 	int currentHeight = 0;
+	
+	Animation background;
 
 	int colors[] = new int[] {
-			0xFFFFFF, 0x00FF00
+			0x000000, 0x00FF00
 	};
+	
+	PixelStrip g_strip;
 	
 	public LiftLights() {
 	}
 
 	@Override
 	public void reset(PixelStrip strip) {
+		g_strip = strip;
+		setBg(new Fire());
 	}
 	
 	public int mixColor(int c1, int c2, float percentOfOne) {
@@ -42,6 +48,16 @@ public class LiftLights extends Animation{
 	public void setValue(double n) {
 		currentHeight = (int)n;
 	}
+	
+	public void setBg(Animation anim) {
+		background = anim;
+		background.reset(g_strip);
+		background.g_fade = 255;
+	}
+	
+	public void setDimness(int dim) {
+		background.g_fade = dim;
+	}
 
 	@Override
 	public boolean draw(PixelStrip strip) {
@@ -49,11 +65,13 @@ public class LiftLights extends Animation{
 		int limit = strip.getPixelCount();
 		int i;
 		
+		background.draw(strip);
+		
 		for(i = 0; i < limit; i++) {
-			if(i > currentHeight-1 && i < currentHeight+1) {
+			if(i > currentHeight-3 && i < currentHeight+3) {
 				strip.setPixelColor(limit_a(i, limit), colors[1]);
 			}else{
-				strip.setPixelColor(limit_a(i, limit), colors[0]);
+//				strip.setPixelColor(limit_a(i, limit), colors[0]);
 			}
 		}
 		return true;

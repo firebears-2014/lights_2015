@@ -42,7 +42,7 @@ public class Pulsing extends Animation {
 			int brightness = pulseOverTime((currentTime + timeShift) % timeCycle);
 			int c1 = color[color_num];
 			int c2 = fadeColor(c1, brightness);
-			strip.setPixelColor(p, c2);
+			setPix(strip, p, c2);
 		}
 		return true;
 	}

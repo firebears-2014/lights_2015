@@ -27,6 +27,7 @@ public class LightsMain {
 
 	// Constants for pixel strips and animations
 	public static final String STRIP1 = "strip1";
+	
 	public static final String PULSING_GREEN_ANIM = "PULSING_GREEN_ANIM";
 	public static final String MOVING_BLUE_ANIM = "MOVING_BLUE_ANIM";
 	public static final String FIRE_ANIM = "FIRE_ANIM";

@@ -14,13 +14,15 @@ public class Binary extends Foreground {
 	
 	public static final int FC_SERVER_PORT = 7890;
 	public static final String FC_SERVER_HOST = "raspberrypi.local";
+	public static final int BYTE_LEN = 8;
+	public static long startingmillis = 0;
 	
 	int timepass = 0;
 	long prevtime = 0;
 	
 	boolean bits[];
 	boolean useAnim = false;
-	double accel = 25;
+	double accel = 15000 / 255;
 
 	int currentPixel;
 	long timePerPixel = 200L;
@@ -66,7 +68,7 @@ public class Binary extends Foreground {
 	}*/
 	
 	public void add_to() {
-		for (int p = 0; p < bits.length; p++) { //until hits 0
+		for (int p = 0; p < BYTE_LEN; p++) { //until hits 0
 			if(bits[p]) {
 				bits[p] = false;
 			}else{
@@ -77,6 +79,8 @@ public class Binary extends Foreground {
 		//change animation
 		useAnim = true;
 		background.g_fade = 255;
+		background.reset(g_strip);
+		System.out.println("time is: "+millis());
 	}
 
 	@Override
@@ -84,14 +88,14 @@ public class Binary extends Foreground {
 		int a, ct1, ct2;
 		draw_bg();
 		if(useAnim) { return true; }
-//		if(prevtime + accel < millis()) {
+		if(prevtime + accel < millis()) {
 //			accel-=.5;
-//			prevtime = millis();
+			prevtime += accel;
 			add_to();
-//		}
+		}
 		
 		for (int p = 0; p < strip.getPixelCount(); p++) {
-			if(bits[p])
+			if(bits[p%BYTE_LEN])
 				strip.setPixelColor(p, colors[1]);
 //			else
 //				strip.setPixelColor(p, colors[0]);

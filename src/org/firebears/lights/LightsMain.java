@@ -26,7 +26,11 @@ import examples.crazy;
 public class LightsMain {
 
 	// Constants for pixel strips and animations
-	public static final String STRIP1 = "strip1";
+	public static final String STRIP_LIFT1 = "lift1";
+	public static final String STRIP_LIFT2 = "lift2";
+	public static final String STRIP_BOX = "box";
+	public static final String STRIP_UNDERGLOW = "underglow";
+	public static final String STRIP_CELEBRATE = "celebrate";
 	
 	public static final String PULSING_GREEN_ANIM = "PULSING_GREEN_ANIM";
 	public static final String MOVING_BLUE_ANIM = "MOVING_BLUE_ANIM";
@@ -53,6 +57,24 @@ public class LightsMain {
 	public static final boolean VERBOSE 
 		= "true".equals(System.getProperty("verbose", "false"));
 	
+	private static void init_pix_strip(
+		OpcDevice fadeCandy, NetworkTable table,
+		int pin, int len, String name)
+	{
+		PixelStrip strip = fadeCandy.addPixelStrip(pin, len, name); 
+		TableWatcher watcher = new TableWatcher(STRIP_LIFT1, strip);
+		
+		watcher.addAnimation(PULSING_GREEN_ANIM, new Pulsing());
+		watcher.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
+		watcher.addAnimation(LIFT, new LiftLights());
+		watcher.addAnimation(FIRE_ANIM, new Fire());
+		watcher.addAnimation(CRAZY, new crazy());
+		watcher.addAnimation(BINARY, new Binary());
+//		watcher.addAnimation(BULB, new bulb());
+
+		table.addTableListener(watcher, true);
+	}
+	
 	public static void main(String[] args) {
 		
 		// Initialize the NetworkTables
@@ -67,19 +89,21 @@ public class LightsMain {
 		if (VERBOSE) System.out.println("# fadecandy.server=" + FC_SERVER_HOST);
 		if (VERBOSE) System.out.println("# fadecandy.port=" + FC_SERVER_PORT);
 		
-		// Initialize pixel strip 1
-		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64, STRIP1); 
-		TableWatcher watcher1 = new TableWatcher(STRIP1, strip1);
-		watcher1.addAnimation(PULSING_GREEN_ANIM, new Pulsing());
-		watcher1.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
-		watcher1.addAnimation(LIFT, new LiftLights());
-		watcher1.addAnimation(FIRE_ANIM, new Fire());
-		watcher1.addAnimation(CRAZY, new crazy());
-		watcher1.addAnimation(BINARY, new Binary());
-//		watcher1.addAnimation(BULB, new bulb());
+		// Initialize pixel strips
 
-		table.addTableListener(watcher1, true);
+		init_pix_strip(fadeCandy, table, 0, 64, STRIP_LIFT1);
 
+/*
+		init_pix_strip(fadeCandy, table, 0, 60, STRIP_LIFT1);
+		init_pix_strip(fadeCandy, table, 1, 60, STRIP_LIFT2);
+		//TODO: Find actual pixel count
+		init_pix_strip(fadeCandy, table, 2, 64, STRIP_BOX);
+		//TODO: Find actual pixel count
+		init_pix_strip(fadeCandy, table, 3, 64, STRIP_UNDERGLOW);
+		//TODO: Find actual pixel count
+		init_pix_strip(fadeCandy, table, 4, 64, STRIP_CELEBRATE);
+*/
+		
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());
 		while (true) {

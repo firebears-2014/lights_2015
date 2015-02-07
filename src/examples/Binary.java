@@ -44,6 +44,7 @@ public class Binary extends Foreground {
 		changeTime = millis();
 		bits = new boolean[strip.getPixelCount()];
 		useAnim = false;
+		startingmillis = millis();
 	}
 	
 	public int mixColor(int c1, int c2, float percentOfOne) {
@@ -54,18 +55,9 @@ public class Binary extends Foreground {
 			(int)((getBlue(c1) * percentOfOne) + (getBlue(c2) * percentOfTwo)) / 2);
 	}
 	
-/*	public int getBit(int p, int s) {
-		int rtn = binaryCount;
-		rtn = rtn << 1;
-		rtn = rtn >> 1;
-		rtn = rtn >> (p-1);
-		rtn = rtn << (s-p);
-		if(rtn == 1) {
-			return 0xFFFFFF;
-		}else{
-			return 0x000000;
-		}
-	}*/
+	public long getmillis() {
+		return millis() - startingmillis;
+	}
 	
 	public void add_to() {
 		for (int p = 0; p < BYTE_LEN; p++) { //until hits 0
@@ -80,7 +72,8 @@ public class Binary extends Foreground {
 		useAnim = true;
 		background.g_fade = 255;
 		background.reset(g_strip);
-		System.out.println("time is: "+millis());
+		System.out.println("time is: "+getmillis());
+		startingmillis = millis();
 	}
 
 	@Override

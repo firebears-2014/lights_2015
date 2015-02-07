@@ -8,7 +8,7 @@ import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
-import examples.bulb;
+//import examples.bulb;
 import examples.crazy;
 
 /**
@@ -72,7 +72,7 @@ public class LightsMain {
 		watcher1.addAnimation(LIFT, new LiftLights());
 		watcher1.addAnimation(FIRE_ANIM, new Fire());
 		watcher1.addAnimation(CRAZY, new crazy());
-		watcher1.addAnimation(BULB, new bulb());
+//		watcher1.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher1, true);
 

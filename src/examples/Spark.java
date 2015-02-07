@@ -11,9 +11,6 @@ import opc.PixelStrip;
  */
 public class Spark extends Animation {
 
-	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "localhost";
-
 	/** Colors of the chasing pixel. */
 	int color[] = { makeColor(196, 196, 196), // White
 			makeColor(128, 128, 0), // Yellow
@@ -26,19 +23,24 @@ public class Spark extends Animation {
 
 	int currentPixel;
 	int numPixels;
+	long changeTime;
+	long timePerPixel = 200L;
 
 	@Override
 	public void reset(PixelStrip strip) {
 		currentPixel = 0;
 		numPixels = strip.getPixelCount();
+		changeTime = millis();
 	}
 
 	@Override
 	public boolean draw(PixelStrip strip) {
+		if (millis() < changeTime) { return false; }
 		for (int i = 0; i < color.length; i++) {
 			strip.setPixelColor(pixNum(currentPixel, i), color[i]);
 		}
 		currentPixel = pixNum(currentPixel + 1, 0);
+		changeTime = millis() + timePerPixel;
 		return true;
 	}
 
@@ -49,21 +51,34 @@ public class Spark extends Animation {
 		return (p + numPixels - i) % numPixels;
 	}
 	
-	
+	/**
+	 * @param n value between 0.0 and 1.0;
+	 */
+	public void setValue(double n) { 
+		double v = 50 * n;
+		v = Math.min(v, 50);
+		v = Math.max(v, 1);
+		timePerPixel = Math.round(4000.0 / v);
+	}
 	
 	
 	public static void main(String[] args) throws Exception {
+		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
+		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
+		
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
-//		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 72);
-		PixelStrip strip1 = fadeCandy.addPixelStrip(2, 16);
+		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64);
+//		PixelStrip strip1 = fadeCandy.addPixelStrip(2, 16);
 		System.out.println(server.getConfig());
 		
-		strip1.setAnimation(new Spark());
+		Animation a = new Spark();
+		a.setValue(0.5);
+		strip1.setAnimation(a);
 		
-		for (int i=0; i<1000; i++) {
+		for (int i=0; i<10000; i++) {
 			server.animate();
-			Thread.sleep(100);
+			Thread.sleep(5);
 		}
 		
 		server.close();

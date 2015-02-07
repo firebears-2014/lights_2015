@@ -9,6 +9,7 @@ import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
+//import examples.bulb;
 import examples.crazy;
 
 /**
@@ -32,6 +33,7 @@ public class LightsMain {
 	public static final String LIFT = "LIFT";
 	public static final String CRAZY = "CRAZY";
 	public static final String BINARY = "BIN_ANIM";
+	public static final String BULB = "BULB";
 
 	/** Host name or IP address of the Network Table server. */
 	public static final String NT_SERVER_HOST 
@@ -73,6 +75,7 @@ public class LightsMain {
 		watcher1.addAnimation(FIRE_ANIM, new Fire());
 		watcher1.addAnimation(CRAZY, new crazy());
 		watcher1.addAnimation(BINARY, new Binary());
+//		watcher1.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher1, true);
 

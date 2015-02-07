@@ -10,8 +10,6 @@ import opc.PixelStrip;
  */
 public class Pulsing extends Animation {
 	
-	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "localhost";
 
 	/** Milliseconds for each pulse cycle. */
 	long timeCycle = 2000;
@@ -64,17 +62,25 @@ public class Pulsing extends Animation {
 	  return (int)Math.round(s * 256);
 	}
 
-	
+	/**
+	 * @param n value between 0.0 and 1.0;
+	 */
+	public void setValue(double n) { 
+		timeCycle = Math.round(3000.0 - 2000.0 * n);
+	}
 	
 	
 	public static void main(String[] args) throws Exception {
-
+		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
+		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
+		
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 72);
 		System.out.println(server.getConfig());
 
 		Animation a = new Pulsing();
+		a.setValue(0.5);
 		strip1.setAnimation(a);
 
 		for (int i = 0; i < 1000; i++) {

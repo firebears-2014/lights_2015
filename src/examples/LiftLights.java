@@ -1,9 +1,10 @@
 package examples;
 
 import opc.Animation;
+import opc.Foreground;
 import opc.PixelStrip;
 
-public class LiftLights extends Animation{
+public class LiftLights extends Foreground{
 	
 	public static final int FC_SERVER_PORT = 7890;
 	public static final String FC_SERVER_HOST = "raspberrypi.local";
@@ -11,14 +12,15 @@ public class LiftLights extends Animation{
 	int currentHeight = 0;
 
 	int colors[] = new int[] {
-			0xFFFFFF, 0x00FF00
+			0x000000, 0x00FF00
 	};
-	
+		
 	public LiftLights() {
 	}
 
 	@Override
 	public void reset(PixelStrip strip) {
+		prepare(strip);
 	}
 	
 	public int mixColor(int c1, int c2, float percentOfOne) {
@@ -49,11 +51,11 @@ public class LiftLights extends Animation{
 		int limit = strip.getPixelCount();
 		int i;
 		
+		draw_bg();
+		
 		for(i = 0; i < limit; i++) {
-			if(i > currentHeight-1 && i < currentHeight+1) {
-				strip.setPixelColor(limit_a(i, limit), colors[1]);
-			}else{
-				strip.setPixelColor(limit_a(i, limit), colors[0]);
+			if(i > currentHeight-3 && i < currentHeight+3) {
+				setPix(strip, limit_a(i, limit), colors[1]);
 			}
 		}
 		return true;

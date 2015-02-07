@@ -8,6 +8,7 @@ import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
+import examples.crazy;
 
 /**
  * This program allows the robot to control lights connected
@@ -28,10 +29,11 @@ public class LightsMain {
 	public static final String MOVING_BLUE_ANIM = "MOVING_BLUE_ANIM";
 	public static final String FIRE_ANIM = "FIRE_ANIM";
 	public static final String LIFT = "LIFT";
+	public static final String CRAZY = "CRAZY";
 
-	
 	/** Host name or IP address of the Network Table server. */
 	public static final String NT_SERVER_HOST 
+//		= System.getProperty("network_table.server", "roborio-2846.local");
 		= System.getProperty("network_table.server", "roborio-2846.local");
 	
 	/** Host name or IP address of the Fadecandy server. */
@@ -67,6 +69,7 @@ public class LightsMain {
 		watcher1.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
 		watcher1.addAnimation(LIFT, new LiftLights());
 		watcher1.addAnimation(FIRE_ANIM, new Fire());
+		watcher1.addAnimation(CRAZY, new crazy());
 
 		table.addTableListener(watcher1, true);
 

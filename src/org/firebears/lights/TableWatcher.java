@@ -48,6 +48,10 @@ public class TableWatcher implements ITableListener {
 		if (contains(suffix, NetworkTable.PATH_SEPARATOR)) { return; }
 		if (suffix.equals(".value"))  {
 			setValue((Double)value);
+		} else if (suffix.equals(".bg")) {
+			setBg((String)value);
+		} else if (suffix.equals(".dim")) {
+			setBg_value((Double)value);
 		} else {
 			setAnimation((String)value);
 		}
@@ -69,7 +73,40 @@ public class TableWatcher implements ITableListener {
 		}
 		strip.getAnimation().setValue((Double) value);
 	}
+	
+	private void setBg_value(double value) {
+		if (VERBOSE) {
+			System.out.println("change BG Dim value on " + strip + " and "
+					+ strip.getAnimation() + " to " + value);
+		}
+		strip.getAnimation().setDimness((int) value);
+	}
 
+	private void setBg(String animationName) {
+		if (animationName==null || animationName.trim().length()==0) {
+			strip.getAnimation().setBg(null);
+			if (VERBOSE) {
+				System.out.println("changeAnimation on " + strip 
+						+ " to nothing ");
+			}
+			return;
+		}
+
+		Animation newAnimation = animationMap.get(animationName.toString());
+		if (newAnimation == null) {
+			System.err.println("Error: unknown animation " + animationName + " for " + strip);
+			return;
+		}
+		
+		if (VERBOSE) {
+			System.out.println("changeAnimation on " + strip + " to "
+					+ animationName + " : " + newAnimation);
+		}
+		if (clear) { strip.clear(); }
+
+		strip.getAnimation().setBg(newAnimation);
+	}
+	
 	/**
 	 * Change the animation currently running on this strip.
 	 * If the animationName is blank, turn off animation on this strip.

@@ -74,22 +74,22 @@ public class Fire extends Animation {
 					ct1-=3;
 				}
 				
-				strip.setPixelColor(limit_a(a, strip.getPixelCount()),
+				setPix(strip, limit_a(a, strip.getPixelCount()),
 					mixColor(colors[ct1], colors[ct2], 1.f)
 				);
-				strip.setPixelColor(limit_a(a+1, strip.getPixelCount()), 
+				setPix(strip, limit_a(a+1, strip.getPixelCount()), 
 						mixColor(colors[ct1], colors[ct2], .75f)
 					);
 				if((int)(Math.random()*10) == 0) {
-					strip.setPixelColor(limit_a(a+2, strip.getPixelCount()),
+					setPix(strip, limit_a(a+2, strip.getPixelCount()),
 						colors[(((int)Math.random())*3) + 8]
 					);
 				}else{
-					strip.setPixelColor(limit_a(a+2, strip.getPixelCount()), 
+					setPix(strip, limit_a(a+2, strip.getPixelCount()), 
 						mixColor(colors[ct1], colors[ct2], .5f)
 					);
 				}
-				strip.setPixelColor(limit_a(a+3, strip.getPixelCount()), 
+				setPix(strip, limit_a(a+3, strip.getPixelCount()), 
 					mixColor(colors[ct1], colors[ct2], .25f)
 				);
 			}

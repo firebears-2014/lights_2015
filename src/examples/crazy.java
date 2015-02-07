@@ -103,7 +103,7 @@ public class crazy extends Animation{
 			int brightness = pulseOverTime((currentTime * timeShift) % timeCycle);
 			int c1 = color[color_num];
 			int c2 = fadeColor(c1, brightness);
-			strip.setPixelColor(i, c2);
+			setPix(strip, i, c2);
 		}
 		return true;
 	}

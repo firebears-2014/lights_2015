@@ -6,6 +6,8 @@ package opc;
  */
 public abstract class Animation {
 	
+	public int g_fade = 255;
+	
 	public static final int BLACK = Animation.makeColor(0, 0, 0);
 
 	/**
@@ -22,12 +24,14 @@ public abstract class Animation {
 	
 	/**
 	 * Set a number value into the Animation. You can override this method to
-	 * make your Animation reactive to the environment.
+	 * make your Animation reactive to the environment. 
+	 * Override these in your Animation class
 	 */
-	public void setValue(double n) {
-		// Override this in your Animation class
-	}
+	public void setValue(double n) { }
+	
+	public void setDimness(int dim) { }
 
+	public void setBg(Animation anim) { }
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	// Utility functions:
@@ -79,6 +83,10 @@ public abstract class Animation {
 		g = (int) (((int) g * brightness / 256));
 		b = (int) (((int) b * brightness / 256));
 		return (r << 16) | (g << 8) | (b) ;
+	}
+	
+	public void setPix(PixelStrip strip, int id, int color) {
+		strip.setPixelColor(id, fadeColor(color, g_fade));
 	}
 	
 	/**

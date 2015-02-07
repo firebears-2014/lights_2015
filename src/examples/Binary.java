@@ -1,6 +1,7 @@
 package examples;
 
 import opc.Animation;
+import opc.Foreground;
 import opc.OpcClient;
 import opc.OpcDevice;
 import opc.PixelStrip;
@@ -9,7 +10,7 @@ import opc.PixelStrip;
 /**
  * Example animation that makes a pixel move across the strip.
  */
-public class Binary extends Animation {
+public class Binary extends Foreground {
 	
 	public static final int FC_SERVER_PORT = 7890;
 	public static final String FC_SERVER_HOST = "raspberrypi.local";
@@ -17,13 +18,15 @@ public class Binary extends Animation {
 	int timepass = 0;
 	long prevtime = 0;
 	
-	int binaryCount = 0;
+	boolean bits[];
+	boolean useAnim = false;
+	double accel = 25;
 
 	int currentPixel;
 	long timePerPixel = 200L;
 	//Red, Yellow, Orange, Purple, White, 
 	int colors[] = new int[] {
-			0x000000, 0xFFFFFF
+			0x000000, 0x00FFFF
 	};
 	
 	/** Time for the next state change. */
@@ -34,9 +37,11 @@ public class Binary extends Animation {
 
 	@Override
 	public void reset(PixelStrip strip) {
-
+		prepare(strip);
 		currentPixel = 0;
 		changeTime = millis();
+		bits = new boolean[strip.getPixelCount()];
+		useAnim = false;
 	}
 	
 	public int mixColor(int c1, int c2, float percentOfOne) {
@@ -47,7 +52,7 @@ public class Binary extends Animation {
 			(int)((getBlue(c1) * percentOfOne) + (getBlue(c2) * percentOfTwo)) / 2);
 	}
 	
-	public int getBit(int p, int s) {
+/*	public int getBit(int p, int s) {
 		int rtn = binaryCount;
 		rtn = rtn << 1;
 		rtn = rtn >> 1;
@@ -58,22 +63,40 @@ public class Binary extends Animation {
 		}else{
 			return 0x000000;
 		}
+	}*/
+	
+	public void add_to() {
+		for (int p = 0; p < bits.length; p++) { //until hits 0
+			if(bits[p]) {
+				bits[p] = false;
+			}else{
+				bits[p] = true;
+				return;
+			}
+		}
+		//change animation
+		useAnim = true;
+		background.g_fade = 255;
 	}
 
 	@Override
 	public boolean draw(PixelStrip strip) {
 		int a, ct1, ct2;
-
-		if(prevtime + 100 < millis()) {
-			prevtime = millis();
-			binaryCount++;
-			for (int p = 0; p < strip.getPixelCount(); p++) {
-				strip.setPixelColor(p, getBit(p, 31));
-			}
-			return true;	
-		}else{
-			return false;
+		draw_bg();
+		if(useAnim) { return true; }
+//		if(prevtime + accel < millis()) {
+//			accel-=.5;
+//			prevtime = millis();
+			add_to();
+//		}
+		
+		for (int p = 0; p < strip.getPixelCount(); p++) {
+			if(bits[p])
+				strip.setPixelColor(p, colors[1]);
+//			else
+//				strip.setPixelColor(p, colors[0]);
 		}
+		return true;
 	}
 	
 	public static void main(String[] args) throws Exception {

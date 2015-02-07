@@ -12,7 +12,8 @@ import opc.PixelStrip;
 public class Spark extends Animation {
 
 	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "localhost";
+//	public static final String FC_SERVER_HOST = "localhost";
+	public static final String FC_SERVER_HOST = "raspberrypi.local";
 
 	/** Colors of the chasing pixel. */
 	int color[] = { makeColor(196, 196, 196), // White

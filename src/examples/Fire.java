@@ -80,7 +80,7 @@ public class Fire extends Animation {
 				setPix(strip, limit_a(a+1, strip.getPixelCount()), 
 						mixColor(colors[ct1], colors[ct2], .75f)
 					);
-				if((int)(Math.random()*10) == 0) {
+				if((int)(Math.random()*30) == 0) {
 					setPix(strip, limit_a(a+2, strip.getPixelCount()),
 						colors[(((int)Math.random())*3) + 8]
 					);

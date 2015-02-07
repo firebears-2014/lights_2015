@@ -4,6 +4,7 @@ import opc.OpcClient;
 import opc.OpcDevice;
 import opc.PixelStrip;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import examples.Binary;
 import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
@@ -30,6 +31,7 @@ public class LightsMain {
 	public static final String FIRE_ANIM = "FIRE_ANIM";
 	public static final String LIFT = "LIFT";
 	public static final String CRAZY = "CRAZY";
+	public static final String BINARY = "BIN_ANIM";
 
 	/** Host name or IP address of the Network Table server. */
 	public static final String NT_SERVER_HOST 
@@ -70,6 +72,7 @@ public class LightsMain {
 		watcher1.addAnimation(LIFT, new LiftLights());
 		watcher1.addAnimation(FIRE_ANIM, new Fire());
 		watcher1.addAnimation(CRAZY, new crazy());
+		watcher1.addAnimation(BINARY, new Binary());
 
 		table.addTableListener(watcher1, true);
 

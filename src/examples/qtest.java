@@ -11,14 +11,18 @@ public class qtest extends Animation{
 	
 	public static final int FC_SERVER_PORT 
 	= Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
-	long timeCycle = 2000000;
+	long timeCycle = 200000;
 
 	public int color[] = {
 			//row 0
-			makeColor(100,100 ,0),
-			makeColor(255,60 ,0),
+			makeColor(255,100 ,0),
+			makeColor(255,255 ,0),
 			makeColor(255,60,0),
-			makeColor(255,60 ,0),
+			makeColor(255,60 ,255),
+			makeColor(255,100 ,0),
+			makeColor(255,255 ,0),
+			makeColor(255,60,0),
+			makeColor(255,60 ,255),
 
 	};
 	int colorLen = color.length;
@@ -46,9 +50,9 @@ public class qtest extends Animation{
 		return true;
 	}
 		private int pulseOverTime(long timeNow) {
-			  double theta = 9 * timeNow / timeCycle;   // Angle in radians
+			  double theta = 16 * timeNow / timeCycle;   // Angle in radians
 			  double s = (Math.sin(theta) + 1.0) / 2.0;     // Value from 0.0 to 1.0
-			  return (int)Math.round(s * 255);
+			  return (int)Math.round(s * 128);
 			}
 	
 	public static void main(String[] args) throws Exception {

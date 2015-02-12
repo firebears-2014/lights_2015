@@ -54,8 +54,16 @@ public class MovingPixel extends Foreground {
 		return true;
 	}
 	
-	
-	
+	protected final int FAST = 100; // ten pixels per second
+	protected final int SLOW = 500; // two pixels per second
+
+	/**
+	 * @param n value between 0.0 and 1.0;
+	 */
+	public void setValue(double n) { 
+		timePerPixel = Math.round(SLOW - (SLOW - FAST) * n);
+		timePerPixel = Math.min(Math.max(FAST, timePerPixel), SLOW);
+	}
 	
 	
 	public static void main(String[] args) throws Exception {

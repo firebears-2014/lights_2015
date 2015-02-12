@@ -10,6 +10,7 @@ import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
+import examples.Spark;
 //import examples.bulb;
 import examples.crazy;
 
@@ -42,6 +43,7 @@ public class LightsMain {
 	public static final String ANIM_BINARY = "BIN_ANIM";
 	public static final String ANIM_BULB = "BULB";
 	public static final String ANIM_CATERPILLAR = "ANIM_CATERPILLAR";
+	public static final String ANIM_SPARK = "SPARK";
 	
 	//Color Schemes
 	public static final int CS_RED = 0;
@@ -73,7 +75,7 @@ public class LightsMain {
 		int pin, int len, String name)
 	{
 		PixelStrip strip = fadeCandy.addPixelStrip(pin, len, name); 
-		TableWatcher watcher = new TableWatcher(STRIP_LIFT1, strip);
+		TableWatcher watcher = new TableWatcher(name, strip);
 		
 		watcher.addAnimation(ANIM_PULSE, new Pulsing());
 		watcher.addAnimation(ANIM_MOVE, new MovingPixel(0x0000FF));
@@ -82,6 +84,8 @@ public class LightsMain {
 		watcher.addAnimation(ANIM_CRAZY, new crazy());
 		watcher.addAnimation(ANIM_BINARY, new Binary());
 		watcher.addAnimation(ANIM_CATERPILLAR, new Caterpillar());
+		watcher.addAnimation(ANIM_SPARK, new Spark());
+
 //		watcher.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher, true);
@@ -115,6 +119,13 @@ public class LightsMain {
 		//TODO: Find actual pixel count
 		init_pix_strip(fadeCandy, table, 4, 64, STRIP_CELEBRATE);
 */
+		
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_BOX);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_UNDERGLOW);
+//		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
+//		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
 		
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());

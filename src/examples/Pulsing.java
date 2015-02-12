@@ -56,6 +56,7 @@ public class Pulsing extends Animation {
 	public void reset(PixelStrip strip) {
 		color[0] = makeColor(0, 128, 0); // Green
 		color[1] = makeColor(64, 64, 0); // Yellow
+		colorLen = color.length;
 	}
 
 	@Override
@@ -89,11 +90,15 @@ public class Pulsing extends Animation {
 	  return (int)Math.round(s * 256);
 	}
 
+	protected final int FAST = 1000; // One cycle every second
+	protected final int SLOW = 3000; // One cycle every three seconds
+	
 	/**
 	 * @param n value between 0.0 and 1.0;
 	 */
 	public void setValue(double n) { 
-		timeCycle = Math.round(3000.0 - 2000.0 * n);
+		timeCycle = Math.round(SLOW - (SLOW - FAST) * n);
+		timeCycle = Math.min(Math.max(FAST, timeCycle), SLOW);
 	}
 	
 	

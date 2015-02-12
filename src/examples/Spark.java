@@ -55,14 +55,15 @@ public class Spark extends Animation {
 		return (p + numPixels - i) % numPixels;
 	}
 	
+	protected final int FAST = 50; // twenty pixels per second
+	protected final int SLOW = 500; // two pixels per second
+
 	/**
 	 * @param n value between 0.0 and 1.0;
 	 */
 	public void setValue(double n) { 
-		double v = 50 * n;
-		v = Math.min(v, 50);
-		v = Math.max(v, 1);
-		timePerPixel = Math.round(4000.0 / v);
+		timePerPixel = Math.round(SLOW - (SLOW - FAST) * n);
+		timePerPixel = Math.min(Math.max(FAST, timePerPixel), SLOW);
 	}
 	
 	

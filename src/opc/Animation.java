@@ -33,6 +33,8 @@ public abstract class Animation {
 
 	public void setBg(Animation anim) { }
 	
+	public void setColor(int color) { }
+	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	// Utility functions:
 	

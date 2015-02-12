@@ -52,6 +52,8 @@ public class TableWatcher implements ITableListener {
 			setBg((String)value);
 		} else if (suffix.equals(".dim")) {
 			setBg_value((Double)value);
+		} else if (suffix.equals(".color")) {
+			setColor((Double)value);
 		} else {
 			setAnimation((String)value);
 		}
@@ -72,6 +74,14 @@ public class TableWatcher implements ITableListener {
 					+ strip.getAnimation() + " to " + value);
 		}
 		strip.getAnimation().setValue((Double) value);
+	}
+	
+	private void setColor(double value) {
+		if (VERBOSE) {
+			System.out.println("change color value on " + strip + " and "
+					+ strip.getAnimation() + " to " + value);
+		}
+		strip.getAnimation().setColor( (int) value);
 	}
 	
 	private void setBg_value(double value) {

@@ -5,6 +5,7 @@ import opc.OpcDevice;
 import opc.PixelStrip;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import examples.Binary;
+import examples.Caterpillar;
 import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
@@ -25,20 +26,30 @@ import examples.crazy;
  */
 public class LightsMain {
 
-	// Constants for pixel strips and animations
+	// Constants for pixel strips 
 	public static final String STRIP_LIFT1 = "lift1";
 	public static final String STRIP_LIFT2 = "lift2";
 	public static final String STRIP_BOX = "box";
 	public static final String STRIP_UNDERGLOW = "underglow";
 	public static final String STRIP_CELEBRATE = "celebrate";
 	
-	public static final String PULSING_GREEN_ANIM = "PULSING_GREEN_ANIM";
-	public static final String MOVING_BLUE_ANIM = "MOVING_BLUE_ANIM";
-	public static final String FIRE_ANIM = "FIRE_ANIM";
-	public static final String LIFT = "LIFT";
-	public static final String CRAZY = "CRAZY";
-	public static final String BINARY = "BIN_ANIM";
-	public static final String BULB = "BULB";
+	// Constants for  animations
+	public static final String ANIM_PULSE = "PULSING_GREEN_ANIM";
+	public static final String ANIM_MOVE = "MOVING_BLUE_ANIM";
+	public static final String ANIM_FIRE = "FIRE_ANIM";
+	public static final String ANIM_LIFT = "LIFT";
+	public static final String ANIM_CRAZY = "CRAZY";
+	public static final String ANIM_BINARY = "BIN_ANIM";
+	public static final String ANIM_BULB = "BULB";
+	public static final String ANIM_CATERPILLAR = "ANIM_CATERPILLAR";
+	
+	//Color Schemes
+	public static final int CS_RED = 0;
+	public static final int CS_BLUE = 1;
+	public static final int CS_YELLOW = 2;
+	public static final int CS_RED_YELLOW = 3;
+	public static final int CS_RED_WHITE = 4;
+	public static final int CS_WHITE = 5;
 
 	/** Host name or IP address of the Network Table server. */
 	public static final String NT_SERVER_HOST 
@@ -64,12 +75,13 @@ public class LightsMain {
 		PixelStrip strip = fadeCandy.addPixelStrip(pin, len, name); 
 		TableWatcher watcher = new TableWatcher(STRIP_LIFT1, strip);
 		
-		watcher.addAnimation(PULSING_GREEN_ANIM, new Pulsing());
-		watcher.addAnimation(MOVING_BLUE_ANIM, new MovingPixel(0x0000FF));
-		watcher.addAnimation(LIFT, new LiftLights());
-		watcher.addAnimation(FIRE_ANIM, new Fire());
-		watcher.addAnimation(CRAZY, new crazy());
-		watcher.addAnimation(BINARY, new Binary());
+		watcher.addAnimation(ANIM_PULSE, new Pulsing());
+		watcher.addAnimation(ANIM_MOVE, new MovingPixel(0x0000FF));
+		watcher.addAnimation(ANIM_LIFT, new LiftLights());
+		watcher.addAnimation(ANIM_FIRE, new Fire());
+		watcher.addAnimation(ANIM_CRAZY, new crazy());
+		watcher.addAnimation(ANIM_BINARY, new Binary());
+		watcher.addAnimation(ANIM_CATERPILLAR, new Caterpillar());
 //		watcher.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher, true);

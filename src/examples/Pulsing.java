@@ -1,5 +1,7 @@
 package examples;
 
+import org.firebears.lights.LightsMain;
+
 import opc.Animation;
 import opc.OpcClient;
 import opc.OpcDevice;
@@ -13,24 +15,49 @@ public class Pulsing extends Animation {
 
 	/** Milliseconds for each pulse cycle. */
 	long timeCycle = 2000;
-	public int color[] = { 
-			makeColor(0, 128, 0), // Green
-			makeColor(64, 64, 0), // Yellow
-//			makeColor(64, 64, 64), // White
-	};
+	public int color[] = new int[2];
 	int colorLen = color.length;
 
-	
+	public void setColor(int colors) {
+		switch (colors) {
+			case LightsMain.CS_BLUE:
+				color[0] = 0x0000BB;
+				color[1] = 0x0000FF;
+				break;
+			case LightsMain.CS_RED:
+				color[0] = 0xFF0000;
+				color[1] = 0xBB0000;
+				break;
+			case LightsMain.CS_RED_WHITE:
+				color[0] = 0xFF0000;
+				color[1] = 0xFFFFFF;
+				break;	
+			case LightsMain.CS_RED_YELLOW:
+				color[0] = 0xFF0000;
+				color[1] = 0xFFAA00;
+				break;
+			case LightsMain.CS_WHITE:
+				color[0] = 0xFFFFFF;
+				color[1] = 0xBBBBBB;
+				break;
+			case LightsMain.CS_YELLOW:
+				color[0] = 0xFFBB00;
+				color[1] = 0xFF8800;
+				break;
+			default:
+				color[0] = 0xFF0000;
+				color[1] = 0xBB0000;
+				break;
+		}
+	}
 	
 	
 	@Override
 	public void reset(PixelStrip strip) {
-		// Nothing
+		color[0] = makeColor(0, 128, 0); // Green
+		color[1] = makeColor(64, 64, 0); // Yellow
 	}
 
-	
-	
-	
 	@Override
 	public boolean draw(PixelStrip strip) {
 		long currentTime = millis() % timeCycle;

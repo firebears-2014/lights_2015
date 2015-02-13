@@ -6,6 +6,8 @@ package opc;
  */
 public abstract class Animation {
 	
+	public Animation background;
+
 	public int g_fade = 255;
 	
 	public static final int BLACK = Animation.makeColor(0, 0, 0);

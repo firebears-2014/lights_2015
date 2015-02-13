@@ -30,6 +30,12 @@ public class TableWatcher implements ITableListener {
 	private final PixelStrip strip;
 	private final Map<String,Animation> animationMap;
 	private final boolean clear = true;
+	
+	double animate_value;
+	String animate_bg;
+	double animate_dim;
+	double animate_col;
+	
 
 	public TableWatcher(String prefix, PixelStrip strip) {
 		this.prefix = prefix;
@@ -46,17 +52,44 @@ public class TableWatcher implements ITableListener {
 		if (! key.startsWith(prefix)) { return; } 
 		String suffix = key.substring(prefix.length());
 		if (contains(suffix, NetworkTable.PATH_SEPARATOR)) { return; }
-		if (suffix.equals(".value"))  {
-			setValue((Double)value);
-		} else if (suffix.equals(".bg")) {
-			setBg((String)value);
-		} else if (suffix.equals(".dim")) {
-			setBg_value((Double)value);
-		} else if (suffix.equals(".color")) {
-			setColor((Double)value);
-		} else {
-			setAnimation((String)value);
+		if(strip.getAnimation() == null) {
+			if (suffix.equals(".value"))  {
+				animate_value = (double) value;
+			} else if (suffix.equals(".bg")) {
+				animate_bg = (String) value;
+			} else if (suffix.equals(".dim")) {
+				animate_dim = (double) value;
+			} else if (suffix.equals(".color")) {
+				animate_col = (double) value;
+			}else{
+				setAnimation((String)value);
+				updateAnimation();
+			}
+			return;
 		}
+		if (suffix.equals(".value"))  {
+			animate_value = (double) value;
+			setValue(animate_value);
+		} else if (suffix.equals(".bg")) {
+			animate_bg = (String) value;
+			setBg(animate_bg);
+		} else if (suffix.equals(".dim")) {
+			animate_dim = (double) value;
+			setBg_value(animate_dim);
+		} else if (suffix.equals(".color")) {
+			animate_col = (double) value;
+			setColor(animate_col);
+		}else{
+			setAnimation((String)value);
+			updateAnimation();
+		}
+	}
+	
+	private void updateAnimation() {
+		setValue(animate_value);
+		setBg(animate_bg);
+		setBg_value(animate_dim);
+		setColor(animate_col);	
 	}
 
 	/**
@@ -144,6 +177,7 @@ public class TableWatcher implements ITableListener {
 			}
 			if (clear) { strip.clear();  }
 			strip.setAnimation(newAnimation);
+			
 		}
 	}
 

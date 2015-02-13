@@ -4,7 +4,6 @@ import examples.Fire;
 
 public abstract class Foreground extends Animation {
 
-	protected Animation background;
 	protected PixelStrip g_strip;
 	
 	@Override

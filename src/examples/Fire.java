@@ -37,6 +37,7 @@ public class Fire extends Animation {
 
 	@Override
 	public void reset(PixelStrip strip) {
+		g_fade = 255;
 		for(int i = 0; i < 4; i++) {
 			temp_colors[i] = (int)(Math.random()*7);
 		}

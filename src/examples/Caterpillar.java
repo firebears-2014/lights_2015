@@ -62,6 +62,7 @@ public class Caterpillar extends Animation{
 
 	@Override
 	public void reset(PixelStrip strip) {
+		g_fade = 255;
 		colorsa[0] = 0xFF0000;
 		colorsa[1] = 0xBBBBBB;
 		speed = -1.0;

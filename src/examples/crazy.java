@@ -92,7 +92,7 @@ public class crazy extends Animation{
 	}
 	
 	public void reset(PixelStrip strip) {
-		
+		g_fade = 255;
 	}
 	@Override
 	public boolean draw(PixelStrip strip) {

@@ -54,6 +54,7 @@ public class Pulsing extends Animation {
 	
 	@Override
 	public void reset(PixelStrip strip) {
+		g_fade = 255;
 		color[0] = makeColor(0, 128, 0); // Green
 		color[1] = makeColor(64, 64, 0); // Yellow
 		colorLen = color.length;

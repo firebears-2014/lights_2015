@@ -106,7 +106,7 @@ public class TableWatcher implements ITableListener {
 			System.out.println("changeAnimationValue on " + strip + " and "
 					+ strip.getAnimation() + " to " + value);
 		}
-		strip.getAnimation().setValue((Double) value);
+		if (strip.getAnimation()!=null) { strip.getAnimation().setValue((Double) value); }
 	}
 	
 	private void setColor(double value) {
@@ -114,7 +114,7 @@ public class TableWatcher implements ITableListener {
 			System.out.println("change color value on " + strip + " and "
 					+ strip.getAnimation() + " to " + value);
 		}
-		strip.getAnimation().setColor( (int) value);
+		if (strip.getAnimation()!=null) {  strip.getAnimation().setColor( (int) value); }
 	}
 	
 	private void setBg_value(double value) {
@@ -122,12 +122,12 @@ public class TableWatcher implements ITableListener {
 			System.out.println("change BG Dim value on " + strip + " and "
 					+ strip.getAnimation() + " to " + value);
 		}
-		strip.getAnimation().setDimness((int) value);
+		if (strip.getAnimation()!=null) { strip.getAnimation().setDimness((int) value); }
 	}
 
 	private void setBg(String animationName) {
 		if (animationName==null || animationName.trim().length()==0) {
-			strip.getAnimation().setBg(null);
+			if (strip.getAnimation()!=null) { strip.getAnimation().setBg(null); }
 			if (VERBOSE) {
 				System.out.println("changeAnimation on " + strip 
 						+ " to nothing ");
@@ -147,7 +147,7 @@ public class TableWatcher implements ITableListener {
 		}
 		if (clear) { strip.clear(); }
 
-		strip.getAnimation().setBg(newAnimation);
+		if (strip.getAnimation()!=null) { strip.getAnimation().setBg(newAnimation); }
 	}
 	
 	/**

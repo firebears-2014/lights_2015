@@ -134,7 +134,7 @@ public class LightsMain {
 			try {
 				Thread.sleep(25);
 			} catch (InterruptedException e ) {
-				if (VERBOSE) { System.err.println(e.getMessage()); }
+ 				if (VERBOSE) { System.err.println(e.getMessage()); }
 			}
 		}
 	}

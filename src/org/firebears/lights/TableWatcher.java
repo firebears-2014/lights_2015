@@ -157,6 +157,7 @@ public class TableWatcher implements ITableListener {
 	private void setAnimation(String animationName) {
 		if (animationName==null || animationName.trim().length()==0) {
 			strip.setAnimation(null);
+			strip.clear();
 			if (VERBOSE) {
 				System.out.println("changeAnimation on " + strip 
 						+ " to nothing ");

@@ -95,9 +95,10 @@ public class Pulsing extends Animation {
 	protected final int SLOW = 3000; // One cycle every three seconds
 	
 	/**
-	 * @param n value between 0.0 and 1.0;
+	 * @param n value between -1.0 and 1.0;
 	 */
 	public void setValue(double n) { 
+		n = Math.abs(n);
 		timeCycle = Math.round(SLOW - (SLOW - FAST) * n);
 		timeCycle = Math.min(Math.max(FAST, timeCycle), SLOW);
 	}

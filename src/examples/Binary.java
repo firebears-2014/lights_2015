@@ -70,8 +70,10 @@ public class Binary extends Foreground {
 		}
 		//change animation
 		useAnim = true;
-		background.g_fade = 255;
-		background.reset(g_strip);
+		if (background!=null) {
+			background.g_fade = 255;
+			background.reset(g_strip);
+		}
 		System.out.println("time is: "+getmillis());
 		startingmillis = millis();
 	}

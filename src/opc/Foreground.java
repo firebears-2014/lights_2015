@@ -14,12 +14,16 @@ public abstract class Foreground extends Animation {
 	
 	public void setBg(Animation anim) {
 		background = anim;
-		background.reset(g_strip);
-		background.g_fade = 255;
+		if (background !=null) {
+			background.reset(g_strip);
+			background.g_fade = 255;
+		}
 	}
 	
 	public void setDimness(int dim) {
-		background.g_fade = dim;
+		if (background != null) {
+			background.g_fade = dim;
+		}
 	}
 
 	public void prepare(PixelStrip strip) {
@@ -28,7 +32,9 @@ public abstract class Foreground extends Animation {
 	}
 	
 	public void draw_bg() {
-		background.draw(g_strip);
+		if (background!=null) {
+			background.draw(g_strip);
+		}
 	}
 	
 }

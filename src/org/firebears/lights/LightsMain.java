@@ -30,7 +30,8 @@ public class LightsMain {
 	// Constants for pixel strips 
 	public static final String STRIP_LIFT1 = "lift1";
 	public static final String STRIP_LIFT2 = "lift2";
-	public static final String STRIP_BOX = "box";
+	public static final String STRIP_BOX_1 = "box_1";
+	public static final String STRIP_BOX_2 = "box_2";
 	public static final String STRIP_UNDERGLOW = "underglow";
 	public static final String STRIP_CELEBRATE = "celebrate";
 	
@@ -112,12 +113,11 @@ public class LightsMain {
 
 		init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
 		init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
-		init_pix_strip(fadeCandy, table, 2, 64, STRIP_BOX);
-		//TODO: Find actual pixel count
-		init_pix_strip(fadeCandy, table, 3, 64, STRIP_UNDERGLOW);
-		//TODO: Find actual pixel count
-		init_pix_strip(fadeCandy, table, 4, 64, STRIP_CELEBRATE);
-
+		init_pix_strip(fadeCandy, table, 2, 18, STRIP_CELEBRATE);
+		init_pix_strip(fadeCandy, table, 3, 35, STRIP_BOX_1);
+		init_pix_strip(fadeCandy, table, 4, 35, STRIP_BOX_2);
+		//TODO: find actual pixel count, if wired later
+		init_pix_strip(fadeCandy, table, 5, 64, STRIP_UNDERGLOW);
 		
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);

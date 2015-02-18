@@ -9,9 +9,6 @@ import opc.PixelStrip;
  * 
  */
 public class TheaterLights extends Animation {
-	
-	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "raspberrypi.local";
 
 	public TheaterLights(int c) {
 		color[0] = c;
@@ -66,6 +63,9 @@ public class TheaterLights extends Animation {
 	
 	
 	public static void main(String[] args) throws Exception {
+		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
+		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
+
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64);

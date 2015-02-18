@@ -109,23 +109,22 @@ public class LightsMain {
 
 //		init_pix_strip(fadeCandy, table, 0, 64, STRIP_LIFT1);
 
-/*
-		init_pix_strip(fadeCandy, table, 0, 60, STRIP_LIFT1);
-		init_pix_strip(fadeCandy, table, 1, 60, STRIP_LIFT2);
-		//TODO: Find actual pixel count
+
+		init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
+		init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
 		init_pix_strip(fadeCandy, table, 2, 64, STRIP_BOX);
 		//TODO: Find actual pixel count
 		init_pix_strip(fadeCandy, table, 3, 64, STRIP_UNDERGLOW);
 		//TODO: Find actual pixel count
 		init_pix_strip(fadeCandy, table, 4, 64, STRIP_CELEBRATE);
-*/
+
 		
-		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
-		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
-		init_pix_strip(fadeCandy, table, 0, 16, STRIP_BOX);
-		init_pix_strip(fadeCandy, table, 0, 16, STRIP_UNDERGLOW);
-		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
-		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_BOX);
+//		init_pix_strip(fadeCandy, table, 0, 16, STRIP_UNDERGLOW);
+//		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
+//		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
 		
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());

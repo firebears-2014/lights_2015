@@ -10,9 +10,6 @@ import opc.PixelStrip;
  */
 public class Fire extends Animation {
 	
-	public static final int FC_SERVER_PORT = 7890;
-	public static final String FC_SERVER_HOST = "raspberrypi.local";
-	
 	int timepass = 0;
 	long prevtime = 0;
 
@@ -108,6 +105,9 @@ public class Fire extends Animation {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
+		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
+
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		

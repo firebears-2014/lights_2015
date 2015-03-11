@@ -71,7 +71,7 @@ public class LightsMain {
 	public static final boolean VERBOSE 
 		= "true".equals(System.getProperty("verbose", "false"));
 	
-	private static void init_pix_strip(
+	private static PixelStrip init_pix_strip(
 		OpcDevice fadeCandy, NetworkTable table,
 		int pin, int len, String name)
 	{
@@ -90,6 +90,7 @@ public class LightsMain {
 //		watcher.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher, true);
+		return strip;
 	}
 	
 	public static void main(String[] args) {
@@ -111,13 +112,13 @@ public class LightsMain {
 //		init_pix_strip(fadeCandy, table, 0, 64, STRIP_LIFT1);
 
 
-		init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
-		init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
-		init_pix_strip(fadeCandy, table, 2, 18, STRIP_CELEBRATE);
-		init_pix_strip(fadeCandy, table, 3, 35, STRIP_BOX_1);
-		init_pix_strip(fadeCandy, table, 4, 35, STRIP_BOX_2);
+		PixelStrip s1 = init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
+		PixelStrip s2 = init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
+		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 18, STRIP_CELEBRATE);
+		PixelStrip s4 = init_pix_strip(fadeCandy, table, 3, 35, STRIP_BOX_1);
+		PixelStrip s5 = init_pix_strip(fadeCandy, table, 4, 35, STRIP_BOX_2);
 		//TODO: find actual pixel count, if wired later
-		init_pix_strip(fadeCandy, table, 5, 64, STRIP_UNDERGLOW);
+		PixelStrip s6 =init_pix_strip(fadeCandy, table, 5, 64, STRIP_UNDERGLOW);
 		
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
@@ -125,6 +126,13 @@ public class LightsMain {
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_UNDERGLOW);
 //		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
 //		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
+		
+		s1.setAnimation(new Fire());
+		s2.setAnimation(new Fire());
+		s3.setAnimation(new Fire());
+		s4.setAnimation(new crazy());
+		s5.setAnimation(new crazy());
+		s6.setAnimation(new Caterpillar());
 		
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());

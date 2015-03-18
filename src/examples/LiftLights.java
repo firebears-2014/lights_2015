@@ -55,7 +55,7 @@ public class LiftLights extends Foreground{
 		
 		for(i = 0; i < limit; i++) {
 			if(i > currentHeight-3 && i < currentHeight+3) {
-				setPix(strip, limit_a(i, limit), colors[1]);
+				setPix(strip, limit - limit_a(i, limit), colors[1]);
 			}
 		}
 		return true;

@@ -11,6 +11,7 @@ import examples.LiftLights;
 import examples.MovingPixel;
 import examples.Pulsing;
 import examples.Spark;
+import examples.TheaterLights;
 //import examples.bulb;
 import examples.crazy;
 
@@ -45,6 +46,7 @@ public class LightsMain {
 	public static final String ANIM_BULB = "BULB";
 	public static final String ANIM_CATERPILLAR = "ANIM_CATERPILLAR";
 	public static final String ANIM_SPARK = "SPARK";
+	public static final String ANIM_THEATER = "THEATER";
 	
 	//Color Schemes
 	public static final int CS_RED = 0;
@@ -86,6 +88,7 @@ public class LightsMain {
 		watcher.addAnimation(ANIM_BINARY, new Binary());
 		watcher.addAnimation(ANIM_CATERPILLAR, new Caterpillar());
 		watcher.addAnimation(ANIM_SPARK, new Spark());
+		watcher.addAnimation(ANIM_THEATER, new TheaterLights(0xFFAA00));
 
 //		watcher.addAnimation(BULB, new bulb());
 

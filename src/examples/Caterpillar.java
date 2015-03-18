@@ -73,7 +73,12 @@ public class Caterpillar extends Animation{
 		if( speed == 0 ) {
 			return false;
 		}
-		if(prevtime + (250 / speed) < millis()) {
+		//Speed = 0 - does nothing
+		//Speed = .1 - every 4700 mpc //Milliseconds per cycle - 4.7 seconds
+		//Speed = .5 - every 2700 mpc //2.7 seconds
+		//Speed = 1. - every 200 mpc //1/5 second
+		//If time that has passed > time that should have passed
+		if(millis() - prevtime > (5000 - (speed *  5000)) + 200) {
 			prevtime = millis();
 			if(speed > 0.0) {
 				progr++;

@@ -6,6 +6,7 @@ import opc.PixelStrip;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import examples.Binary;
 import examples.Caterpillar;
+import examples.Exploding;
 import examples.Fire;
 import examples.LiftLights;
 import examples.MovingPixel;
@@ -47,6 +48,7 @@ public class LightsMain {
 	public static final String ANIM_CATERPILLAR = "ANIM_CATERPILLAR";
 	public static final String ANIM_SPARK = "SPARK";
 	public static final String ANIM_THEATER = "THEATER";
+	public static final String ANIM_EXPLODE = "ANIM_EXPLODE";
 	
 	//Color Schemes
 	public static final int CS_RED = 0;
@@ -89,6 +91,7 @@ public class LightsMain {
 		watcher.addAnimation(ANIM_CATERPILLAR, new Caterpillar());
 		watcher.addAnimation(ANIM_SPARK, new Spark());
 		watcher.addAnimation(ANIM_THEATER, new TheaterLights(0xFFAA00));
+		watcher.addAnimation(ANIM_EXPLODE, new Exploding());
 
 //		watcher.addAnimation(BULB, new bulb());
 
@@ -142,7 +145,7 @@ public class LightsMain {
 		while (true) {
 			server.animate();
 			try {
-				Thread.sleep(25);
+				Thread.sleep(10);
 			} catch (InterruptedException e ) {
  				if (VERBOSE) { System.err.println(e.getMessage()); }
 			}

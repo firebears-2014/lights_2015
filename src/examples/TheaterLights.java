@@ -22,7 +22,7 @@ public class TheaterLights extends Animation {
 	int rotat = 2;
 	int state;
 	long timePerCycle = 100L;
-
+	boolean forward = true;
 	
 	
 	
@@ -34,12 +34,18 @@ public class TheaterLights extends Animation {
 		state = 0;
 		changeTime = millis();
 	}
+	
+	protected static final int FAST = 50; // twenty pixels per second
+	protected static final int SLOW = 1000; // one pixel per second
+	
+	/**
+	 * @param n value between -1.0 and 1.0;
+	 */
 	public void setValue(double n) {
-		// Override this in your Animation class
-		rotat = (int)n;
-		
-		
-
+		forward = (n >= 0.0);
+		n = Math.abs(n);
+		timePerCycle = Math.round(SLOW - (SLOW - FAST) * n);
+		timePerCycle = Math.min(Math.max(FAST, timePerCycle), SLOW);
 	}
 
 	
@@ -48,9 +54,9 @@ public class TheaterLights extends Animation {
 	public boolean draw(PixelStrip strip) {
 		if (millis() < changeTime) { return false;}
 			
-		state = (state - 1) % (N * rotat);
+		state = (state  + (forward ? -1 : 1)) % (N * rotat);
 		for (int i=0; i<strip.getPixelCount(); i++)  {
-			int j = (i+state) % (N * rotat);
+			int j = (i+state+N) % (N * rotat);
 			int c1 = color[0];
 			strip.setPixelColor(i, j>=N ? color[0] : BLACK);
 		}
@@ -65,19 +71,20 @@ public class TheaterLights extends Animation {
 	public static void main(String[] args) throws Exception {
 		String FC_SERVER_HOST = System.getProperty("fadecandy.server", "raspberrypi.local");
 		int FC_SERVER_PORT = Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
-
+		int STRIP1_COUNT = Integer.parseInt(System.getProperty("fadecandy.strip1.count", "64"));
+		
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
-		PixelStrip strip1 = fadeCandy.addPixelStrip(0, 64);
+		PixelStrip strip1 = fadeCandy.addPixelStrip(0, STRIP1_COUNT);
 		System.out.println(server.getConfig());
 		
 		TheaterLights a = new TheaterLights(0x0000DD);
-		a.setValue(600);
+		a.setValue(0.8);
 		strip1.setAnimation(a);
 		
 		for (int i=0; i<1000; i++) {
 			server.animate();
-			Thread.sleep(100);
+			Thread.sleep(FAST/2);
 		}
 		
 		strip1.clear();

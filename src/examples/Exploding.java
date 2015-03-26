@@ -16,18 +16,18 @@ public class Exploding extends Animation {
 	protected static final int SLOW = 100;
 	
 	/** Fast pace animation.  One hundred pixels per second.   */
-	protected static final int FAST = 10;
+	protected static final int FAST = 15;
 
 	/** List of colors to display.  */
 	public int color[] = { 
 			0x000000,  // black
 			0xFFFF00,  // yellow
 			0x000000,  // black
-			0x888888   // white
+			0xFFFFFF   // white
 	};
 	
 	/** Number of pixels in a group of lights. */
-	int N = 4;
+	int N = 2;
 	
 	/** Milliseconds to the next state change. */
 	long timePerCycle = 100L;

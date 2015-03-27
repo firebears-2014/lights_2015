@@ -12,10 +12,10 @@ import opc.PixelStrip;
  */
 public class Exploding extends Animation {
 
-	/** Slower animation.  Ten pixels per second. */
+	/** Slower animation.  Ten cycles per second. */
 	protected static final int SLOW = 100;
 	
-	/** Fast pace animation.  One hundred pixels per second.   */
+	/** Fast pace animation.  67 cycles per second.   */
 	protected static final int FAST = 15;
 
 	/** List of colors to display.  */
@@ -38,6 +38,7 @@ public class Exploding extends Animation {
 	/** Relative speed, from 0.0 to 1.0. */
 	double speed = 0.0;
 	
+	/** State within the animation sequence. */
 	int state;
 	
 	@Override
@@ -54,9 +55,13 @@ public class Exploding extends Animation {
 		int middle = strip.getPixelCount() / 2;
 		state = (state + 1) % (N * color.length);
 		for (int i=0; i<middle; i++)  {
-			int j = (i+state+N) % (N * color.length);
-			strip.setPixelColor(middle - i, color[j/N]);
-			strip.setPixelColor(middle + i, color[j/N]);
+			int j = (N + state + i) % (N * color.length) / N;
+			strip.setPixelColor(i, color[j]);
+		}
+		for (int i=strip.getPixelCount()-1; i>=middle; i--) {
+			int j = (N + state - i) % (N * color.length) / N;
+			if (j<0) j+=color.length;
+			strip.setPixelColor(i, color[j]);
 		}
 		for (int i=middle-1; i<middle+1; i++)  {
 			strip.setPixelColor(i, 0xFFFFFF);
@@ -67,10 +72,17 @@ public class Exploding extends Animation {
 		return true;
 	}
 	
-	private void setSpeed(double n) {
+	/**
+	 * Set the relative speed of the animation. 
+	 * 
+	 * @param n number in the range 0.0 to 1.0.
+	 * @return timePerCycle, in the range from FAST to SLOW.
+	 */
+	private long setSpeed(double n) {
 		speed = Math.min(Math.abs(n), 1.0);
 		timePerCycle = Math.round(SLOW - (SLOW - FAST) * n);
 		timePerCycle = Math.min(Math.max(FAST, timePerCycle), SLOW);
+		return timePerCycle;
 	}
 
 	

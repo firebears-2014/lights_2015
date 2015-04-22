@@ -52,9 +52,9 @@ public class Fire extends Animation {
 	
 	public int limit_a(int a, int limit) {
 		if(a >= limit) {
-			return limit - (a - limit);
+			return (limit - 1) - (a - limit);
 		}else{
-			return limit - a;
+			return (limit - 1) - a;
 		}
 	}
 

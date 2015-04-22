@@ -120,7 +120,7 @@ public class LightsMain {
 
 		PixelStrip s1 = init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
 		PixelStrip s2 = init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
-		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 18, STRIP_CELEBRATE);
+		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 35, STRIP_CELEBRATE);
 		PixelStrip s4 = init_pix_strip(fadeCandy, table, 3, 35, STRIP_BOX_1);
 		PixelStrip s5 = init_pix_strip(fadeCandy, table, 4, 35, STRIP_BOX_2);
 		//TODO: find actual pixel count, if wired later

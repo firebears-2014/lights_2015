@@ -83,10 +83,9 @@ public class Binary extends Foreground {
 		int a, ct1, ct2;
 		draw_bg();
 		if(useAnim) { return true; }
-		if(prevtime + accel < millis()) {
-//			accel-=.5;
+		if(getmillis() > prevtime + accel) {
 			prevtime += accel;
-			add_to();
+			add_to(); //add
 		}
 		
 		for (int p = 0; p < strip.getPixelCount(); p++) {

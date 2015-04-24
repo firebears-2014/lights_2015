@@ -57,6 +57,9 @@ public class LightsMain {
 	public static final int CS_RED_YELLOW = 3;
 	public static final int CS_RED_WHITE = 4;
 	public static final int CS_WHITE = 5;
+	public static final int CS_GREEN_WHITE = 6;
+	public static final int CS_R_W_B = 7;
+	public static final int CS_WHITE2 = 8;
 
 	/** Host name or IP address of the Network Table server. */
 	public static final String NT_SERVER_HOST 

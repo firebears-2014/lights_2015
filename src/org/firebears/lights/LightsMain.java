@@ -31,8 +31,10 @@ import examples.crazy;
 public class LightsMain {
 
 	// Constants for pixel strips 
-	public static final String STRIP_LIFTU = "lift";
-	public static final String STRIP_LIFTD = "lift_diagonal";
+	public static final String STRIP_LIFTU = "lift_up";
+	public static final String STRIP_LIFTD = "lift_down";
+	public static final String STRIP_SUPPU = "support_up";
+	public static final String STRIP_SUPPD = "support_down";
 	public static final String STRIP_TROPH = "trophy";
 	public static final String STRIP_INRBT = "inside";
 	
@@ -77,7 +79,7 @@ public class LightsMain {
 	public static final boolean VERBOSE 
 		= "true".equals(System.getProperty("verbose", "false"));
 	
-	private static PixelStrip init_pix_strip(
+	private static TableWatcher init_pix_strip(
 		OpcDevice fadeCandy, NetworkTable table,
 		int pin, int len, String name)
 	{
@@ -98,7 +100,7 @@ public class LightsMain {
 //		watcher.addAnimation(BULB, new bulb());
 
 		table.addTableListener(watcher, true);
-		return strip;
+		return watcher;
 	}
 	
 	public static void main(String[] args) {
@@ -117,13 +119,12 @@ public class LightsMain {
 		
 		// Initialize pixel strips
 
-//		init_pix_strip(fadeCandy, table, 0, 64, STRIP_LIFT1);
-
-
-		PixelStrip s1 = init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFTU);
-		PixelStrip s2 = init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFTD);
-		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 35, STRIP_TROPH);
-		PixelStrip s4 = init_pix_strip(fadeCandy, table, 3, 35, STRIP_INRBT);
+		TableWatcher s1 = init_pix_strip(fadeCandy, table, 0, 46, STRIP_LIFTU);
+		TableWatcher s2 = init_pix_strip(fadeCandy, table, 1, 64, STRIP_LIFTD);
+		TableWatcher s3 = init_pix_strip(fadeCandy, table, 2, 64, STRIP_SUPPU);
+		TableWatcher s4 = init_pix_strip(fadeCandy, table, 3, 53, STRIP_SUPPD);
+		TableWatcher s5 = init_pix_strip(fadeCandy, table, 4, 64, STRIP_TROPH);
+		TableWatcher s6 = init_pix_strip(fadeCandy, table, 5, 64, STRIP_INRBT);
 		
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
@@ -132,42 +133,48 @@ public class LightsMain {
 //		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
 //		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
 		
-		s1.setAnimation(new Fire());
-		s2.setAnimation(new Fire());
-		s3.setAnimation(new Fire());
-		s4.setAnimation(new crazy());
-		
+		s1.setAnimation(ANIM_FIRE);
+		s2.setAnimation(ANIM_FIRE);
+		s3.setAnimation(ANIM_FIRE);
+		s4.setAnimation(ANIM_FIRE);
+		s5.setAnimation(ANIM_CRAZY);
+		s6.setAnimation(ANIM_CRAZY);
+
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());
 		int timeswitch = 0;
+
 		while (true) {
 			server.animate();
 			try {
 				Thread.sleep(10);
 				timeswitch++;
+				if(timeswitch >= 4000)
+					timeswitch-=4000;
 			} catch (InterruptedException e ) {
  				if (VERBOSE) { System.err.println(e.getMessage()); }
 			}
-			if((timeswitch%100) == 0) {
-				int a = timeswitch%400;
-				Animation an;
+			if((timeswitch%1000) == 0) {
+				int a = timeswitch%4000;
+				String an;
 				if(a == 0) {
-					an = new Fire();
-				}else if(a == 1) {
-					an = new crazy();
-				}else if(a == 2) {
-					an = new Exploding();
-				}else if(a == 3) {
-					an = new Binary();
+					an = ANIM_FIRE;
+				}else if(a == 1000) {
+					an = ANIM_CRAZY;
+				}else if(a == 2000) {
+					an = ANIM_EXPLODE;
+				}else if(a == 3000) {
+					an = ANIM_BINARY;
 				}else{
-					an = new Fire();
+					an = ANIM_FIRE;
 				}
 				s1.setAnimation(an);
 				s2.setAnimation(an);
-				s3.setAnimation(new Caterpillar());
-				s4.setAnimation(new Pulsing());
+				s3.setAnimation(an);
+				s4.setAnimation(an);
+				s5.setAnimation(ANIM_PULSE);
+				s6.setAnimation(ANIM_CATERPILLAR);
 			}
 		}
 	}
-
 }

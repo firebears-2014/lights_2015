@@ -1,5 +1,6 @@
 package org.firebears.lights;
 
+import opc.Animation;
 import opc.OpcClient;
 import opc.OpcDevice;
 import opc.PixelStrip;
@@ -30,12 +31,10 @@ import examples.crazy;
 public class LightsMain {
 
 	// Constants for pixel strips 
-	public static final String STRIP_LIFT1 = "lift1";
-	public static final String STRIP_LIFT2 = "lift2";
-	public static final String STRIP_BOX_1 = "box_1";
-	public static final String STRIP_BOX_2 = "box_2";
-	public static final String STRIP_UNDERGLOW = "underglow";
-	public static final String STRIP_CELEBRATE = "celebrate";
+	public static final String STRIP_LIFTU = "lift";
+	public static final String STRIP_LIFTD = "lift_diagonal";
+	public static final String STRIP_TROPH = "trophy";
+	public static final String STRIP_INRBT = "inside";
 	
 	// Constants for  animations
 	public static final String ANIM_PULSE = "PULSING_GREEN_ANIM";
@@ -118,13 +117,10 @@ public class LightsMain {
 //		init_pix_strip(fadeCandy, table, 0, 64, STRIP_LIFT1);
 
 
-		PixelStrip s1 = init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFT1);
-		PixelStrip s2 = init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFT2);
-		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 35, STRIP_CELEBRATE);
-		PixelStrip s4 = init_pix_strip(fadeCandy, table, 3, 35, STRIP_BOX_1);
-		PixelStrip s5 = init_pix_strip(fadeCandy, table, 4, 35, STRIP_BOX_2);
-		//TODO: find actual pixel count, if wired later
-		PixelStrip s6 =init_pix_strip(fadeCandy, table, 5, 64, STRIP_UNDERGLOW);
+		PixelStrip s1 = init_pix_strip(fadeCandy, table, 0, 50, STRIP_LIFTU);
+		PixelStrip s2 = init_pix_strip(fadeCandy, table, 1, 50, STRIP_LIFTD);
+		PixelStrip s3 = init_pix_strip(fadeCandy, table, 2, 35, STRIP_TROPH);
+		PixelStrip s4 = init_pix_strip(fadeCandy, table, 3, 35, STRIP_INRBT);
 		
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
@@ -137,17 +133,36 @@ public class LightsMain {
 		s2.setAnimation(new Fire());
 		s3.setAnimation(new Fire());
 		s4.setAnimation(new crazy());
-		s5.setAnimation(new crazy());
-		s6.setAnimation(new Caterpillar());
 		
 		// Wait forever while Client Connection Reader thread runs
 		System.out.println(server.getConfig());
+		int timeswitch = 0;
 		while (true) {
 			server.animate();
 			try {
 				Thread.sleep(10);
+				timeswitch++;
 			} catch (InterruptedException e ) {
  				if (VERBOSE) { System.err.println(e.getMessage()); }
+			}
+			if((timeswitch%100) == 0) {
+				int a = timeswitch%400;
+				Animation an;
+				if(a == 0) {
+					an = new Fire();
+				}else if(a == 1) {
+					an = new crazy();
+				}else if(a == 2) {
+					an = new Exploding();
+				}else if(a == 3) {
+					an = new Binary();
+				}else{
+					an = new Fire();
+				}
+				s1.setAnimation(an);
+				s2.setAnimation(an);
+				s3.setAnimation(new Caterpillar());
+				s4.setAnimation(new Pulsing());
 			}
 		}
 	}

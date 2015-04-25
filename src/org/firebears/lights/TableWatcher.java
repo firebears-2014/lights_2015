@@ -154,7 +154,7 @@ public class TableWatcher implements ITableListener {
 	 * Change the animation currently running on this strip.
 	 * If the animationName is blank, turn off animation on this strip.
 	 */
-	private void setAnimation(String animationName) {
+	protected void setAnimation(String animationName) {
 		if (animationName==null || animationName.trim().length()==0) {
 			strip.setAnimation(null);
 			strip.clear();

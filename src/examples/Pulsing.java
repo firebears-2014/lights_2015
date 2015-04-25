@@ -17,46 +17,66 @@ public class Pulsing extends Animation {
 	long timeCycle = 2000;
 	public int color[] = new int[2];
 	int colorLen = color.length;
+	
+	public Pulsing() { this.setColor(-1); }
+	public Pulsing(int colors)  { this.setColor(colors); }
 
 	public void setColor(int colors) {
 		switch (colors) {
-			case LightsMain.CS_BLUE:
-				color[0] = 0x0000BB;
-				color[1] = 0x0000FF;
-				break;
 			case LightsMain.CS_RED:
 				color[0] = 0xFF0000;
 				color[1] = 0xBB0000;
 				break;
-			case LightsMain.CS_RED_WHITE:
-				color[0] = 0xFF0000;
-				color[1] = 0xFFFFFF;
-				break;	
-			case LightsMain.CS_RED_YELLOW:
-				color[0] = 0xFF0000;
-				color[1] = 0xFFAA00;
-				break;
-			case LightsMain.CS_WHITE:
-				color[0] = 0xFFFFFF;
-				color[1] = 0xBBBBBB;
+			case LightsMain.CS_BLUE:
+				color[0] = 0x0000BB;
+				color[1] = 0x0000FF;
 				break;
 			case LightsMain.CS_YELLOW:
 				color[0] = 0xFFBB00;
 				color[1] = 0xFF8800;
 				break;
-			default:
+			case LightsMain.CS_RED_YELLOW:
 				color[0] = 0xFF0000;
-				color[1] = 0xBB0000;
+				color[1] = 0xFFAA00;
+				break;
+			case LightsMain.CS_RED_WHITE:
+				color[0] = 0xFF0000;
+				color[1] = 0xFFFFFF;
+				break;	
+			case LightsMain.CS_WHITE:
+				color[0] = 0xFFFFFF;
+				color[1] = 0xBBBBBB;
+				break;
+			case LightsMain.CS_GREEN_WHITE:
+				color[0] = 0x888888;
+				color[1] = 0x0000FF;
+				break;
+			case LightsMain.CS_R_W_B:
+				color = new int[3];
+				color[0] = 0xFF0000;
+				color[1] = 0x0000FF;
+				color[2] = 0x888888;
+				break;
+			case LightsMain.CS_WHITE2:
+				color = new int[3];
+				color[0] = 0x888888;
+				color[1] = 0x888888;
+				color[2] = 0x888888;
+				break;
+			default:
+				color[0] = makeColor(0, 128, 0); // Green
+				color[1] = makeColor(64, 64, 0); // Yellow
 				break;
 		}
+		colorLen = color.length;
 	}
 	
 	
 	@Override
 	public void reset(PixelStrip strip) {
 		g_fade = 255;
-		color[0] = makeColor(0, 128, 0); // Green
-		color[1] = makeColor(64, 64, 0); // Yellow
+//		color[0] = makeColor(0, 128, 0); // Green
+//		color[1] = makeColor(64, 64, 0); // Yellow
 		colorLen = color.length;
 	}
 

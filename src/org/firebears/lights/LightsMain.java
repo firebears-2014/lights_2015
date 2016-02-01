@@ -22,22 +22,22 @@ import examples.crazy;
  * to the Fadecandy server.  The robot will make changes into
  * the "lights" network table.  This program will detect those
  * changes and cause the animations to change on the pixel
- * strips.  
+ * strips.
  * <p>
- * This program can run on any computer in the robot's 
+ * This program can run on any computer in the robot's
  * subnet.  It may run on the same Raspberry Pi where the
  * Fadecandy server is running.
  */
 public class LightsMain {
 
-	// Constants for pixel strips 
+	// Constants for pixel strips
 	public static final String STRIP_LIFTU = "lift_up";
 	public static final String STRIP_LIFTD = "lift_down";
 	public static final String STRIP_SUPPU = "support_up";
 	public static final String STRIP_SUPPD = "support_down";
 	public static final String STRIP_TROPH = "trophy";
 	public static final String STRIP_INRBT = "inside";
-	
+
 	// Constants for  animations
 	public static final String ANIM_PULSE = "PULSING_GREEN_ANIM";
 	public static final String ANIM_MOVE = "MOVING_BLUE_ANIM";
@@ -50,7 +50,7 @@ public class LightsMain {
 	public static final String ANIM_SPARK = "SPARK";
 	public static final String ANIM_THEATER = "THEATER";
 	public static final String ANIM_EXPLODE = "ANIM_EXPLODE";
-	
+
 	//Color Schemes
 	public static final int CS_RED = 0;
 	public static final int CS_BLUE = 1;
@@ -63,29 +63,29 @@ public class LightsMain {
 	public static final int CS_WHITE2 = 8;
 
 	/** Host name or IP address of the Network Table server. */
-	public static final String NT_SERVER_HOST 
+	public static final String NT_SERVER_HOST
 //		= System.getProperty("network_table.server", "roborio-2846.local");
-		= System.getProperty("network_table.server", "roborio-2846.local");
-	
+		= System.getProperty("network_table.server", "roborio-2846-frc.local");
+
 	/** Host name or IP address of the Fadecandy server. */
-	public static final String FC_SERVER_HOST 
+	public static final String FC_SERVER_HOST
 		= System.getProperty("fadecandy.server", "raspberrypi.local");
-	
+
 	/** Port number of the Fadecandy server. */
-	public static final int FC_SERVER_PORT 
+	public static final int FC_SERVER_PORT
 		= Integer.parseInt(System.getProperty("fadecandy.port", "7890"));
-	
+
 	/** Whether to display extra information about internal processes. */
-	public static final boolean VERBOSE 
+	public static final boolean VERBOSE
 		= "true".equals(System.getProperty("verbose", "false"));
-	
+
 	private static TableWatcher init_pix_strip(
 		OpcDevice fadeCandy, NetworkTable table,
 		int pin, int len, String name)
 	{
-		PixelStrip strip = fadeCandy.addPixelStrip(pin, len, name); 
+		PixelStrip strip = fadeCandy.addPixelStrip(pin, len, name);
 		TableWatcher watcher = new TableWatcher(name, strip);
-		
+
 		watcher.addAnimation(ANIM_PULSE, new Pulsing());
 		watcher.addAnimation(ANIM_MOVE, new MovingPixel(0x0000FF));
 		watcher.addAnimation(ANIM_LIFT, new LiftLights());
@@ -102,21 +102,21 @@ public class LightsMain {
 		table.addTableListener(watcher, true);
 		return watcher;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		// Initialize the NetworkTables
 		NetworkTable.setClientMode();
 		NetworkTable.setIPAddress(NT_SERVER_HOST);
 		NetworkTable table = NetworkTable.getTable("lights");
 		if (VERBOSE) System.out.println("# network_table.server=" + NT_SERVER_HOST);
-		
+
 		// Initialize Fadecandy server
 		OpcClient server = new OpcClient(FC_SERVER_HOST, FC_SERVER_PORT);
 		OpcDevice fadeCandy = server.addDevice();
 		if (VERBOSE) System.out.println("# fadecandy.server=" + FC_SERVER_HOST);
 		if (VERBOSE) System.out.println("# fadecandy.port=" + FC_SERVER_PORT);
-		
+
 		// Initialize pixel strips
 
 		TableWatcher s1 = init_pix_strip(fadeCandy, table, 0, 46, STRIP_LIFTU);
@@ -125,14 +125,14 @@ public class LightsMain {
 		TableWatcher s4 = init_pix_strip(fadeCandy, table, 3, 53, STRIP_SUPPD);
 		TableWatcher s5 = init_pix_strip(fadeCandy, table, 4, 64, STRIP_TROPH);
 		TableWatcher s6 = init_pix_strip(fadeCandy, table, 5, 64, STRIP_INRBT);
-		
+
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT1);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_LIFT2);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_BOX);
 //		init_pix_strip(fadeCandy, table, 0, 16, STRIP_UNDERGLOW);
 //		init_pix_strip(fadeCandy, table, 1, 8, "nothing");
 //		init_pix_strip(fadeCandy, table, 2, 16, STRIP_CELEBRATE);
-		
+
 		s1.setAnimation(ANIM_FIRE);
 		s2.setAnimation(ANIM_FIRE);
 		s3.setAnimation(ANIM_FIRE);
